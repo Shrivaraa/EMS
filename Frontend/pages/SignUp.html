@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SignUp Page</title>
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <style>
+      .optional-note {
+        font-size: 0.8em;
+        color: #d0b5b1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login_page">
+      <h1>SignUp</h1>
+      <div class="container">
+        <div class="main">
+          <div class="content">
+            <h2>Create Your Account</h2>
+            <form action="/signup" method="post">
+              <label for="username">User Name</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="User Name"
+                required
+                autofocus
+              />
+              <label for="email">Email </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="User Email"
+              />
+
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="User Password"
+                required
+              />
+              <label style="font-size: 0.9rem; margin-top: -6px">
+                <input type="checkbox" onclick="togglePassword()" /> Show
+                Password
+              </label>
+
+              <button class="btn" type="submit">SignUp</button>
+            </form>
+            <p class="account">
+              Already Have An Account? <a href="../pages/Login.html">Login</a>
+            </p>
+          </div>
+          <div class="form-img">
+            <img src="../static/images/Login.jpg" alt="Background image" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="toast" class="toast hidden"></div>
+    <script src="../static/js/auth.js"></script>
+  </body>
+</html>

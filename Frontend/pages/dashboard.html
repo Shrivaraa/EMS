@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../static/css/dashboard.css" />
+
+    <style>
+      .protected-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="protected-content">
+      <div class="header">
+        <h2>Employee Management System</h2>
+        <button id="logoutBtn" class="logout-button" type="button">
+          Logout
+        </button>
+      </div>
+
+      <div class="main-container">
+        <div class="sidebar">
+          <h4 style="margin-bottom: 20px">Quick Actions</h4>
+          <button onclick="showSection('dashboard')">Submit Form</button>
+          <button onclick="showSection('employeelist')">Employee List</button>
+          <button onclick="showSection('manage')">Manage Employee</button>
+          <button onclick="showSection('analytics')">Analytics</button>
+        </div>
+        <div class="content-area">
+          <div id="dashboardSection">
+            <div class="dashboard">
+              <h1>Employee Management Dashboard</h1>
+              <div id="employeeFormWrapper">
+                <h3>Enter Your Employee Details</h3>
+                <form id="employeeForm">
+                  <input
+                    type="text"
+                    name="employee_id"
+                    placeholder="Employee ID"
+                    required
+                    disabled
+                  />
+                  <input type="text" name="name" placeholder="Name" required />
+                  <select name="designation" required>
+                    <option value="" disabled selected hidden>
+                      Designation
+                    </option>
+                    <option value="Manager">Manager</option>
+                    <option value="Developer">Developer</option>
+                    <option value="Tester">Tester</option>
+                    <option value="Intern">Intern</option>
+                    <option value="Consultant">Consultant</option>
+                    <option value="Team Lead">Team Lead</option>
+                    <option value="HR Executive">HR Executive</option>
+                    <option value="Sales Executive">Sales Executive</option>
+                  </select>
+
+                  <select name="department" required>
+                    <option value="" disabled selected hidden>
+                      Department
+                    </option>
+                    <option value="HR">HR</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Finance">Finance</option>
+                  </select>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    required
+                  />
+                  <button type="submit" class="btn-submit">Submit</button>
+                  <!-- <button onclick="toggleViewById()" class="btn-vid">
+                    View By ID
+                  </button> -->
+                </form>
+              </div>
+              <!-- <div id="viewByIdSection" style="display: none; margin-top: 40px">
+                <input
+                  type="text"
+                  id="searchById"
+                  placeholder="Enter Employee ID"
+                  style="
+                    padding: 8px;
+                    border-radius: 5px;
+                    border: 1px solid #ccc;
+                  "
+                />
+                <button
+                  onclick="viewEmployeeById()"
+                  class="btn-v"
+                  style="margin-left: 10px"
+                >
+                  View
+                </button>
+                <button
+                  onclick="toggleForm()"
+                  class="back-button"
+                  style="margin-left: 1px"
+                >
+                  Back
+                </button>
+              </div> -->
+              <!-- <div id="employeeDetails" style="display: none; margin-top: 20px">
+                <h3>Employee Details</h3>
+                <form id="updateForm">
+                  <input type="text" id="emp_id" disabled />
+                  <input
+                    type="text"
+                    id="emp_name"
+                    placeholder="Name"
+                    required
+                  />
+                  <select id="emp_designation" required>
+                    <option value="" disabled selected hidden>
+                      Designation
+                    </option>
+                    <option value="Manager">Manager</option>
+                    <option value="Developer">Developer</option>
+                    <option value="Tester">Tester</option>
+                    <option value="Intern">Intern</option>
+                    <option value="Consultant">Consultant</option>
+                    <option value="Team Lead">Team Lead</option>
+                    <option value="HR Executive">HR Executive</option>
+                    <option value="Sales Executive">Sales Executive</option>
+                  </select>
+
+                  <select id="emp_department" required>
+                    <option value="" disabled selected hidden>
+                      Department
+                    </option>
+                    <option value="HR">HR</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Finance">Finance</option>
+                  </select>
+                  <input
+                    type="email"
+                    id="emp_email"
+                    placeholder="Email"
+                    required
+                  />
+                  <button
+                    class="btn-update"
+                    type="button"
+                    onclick="updateEmployee()"
+                  >
+                    Update
+                  </button>
+                  <button
+                    class="btn-delete"
+                    type="button"
+                    onclick="deleteEmployee()"
+                  >
+                    Delete
+                  </button>
+                  <button
+                    onclick="toggleForm()"
+                    class="back-button"
+                    style="margin-left: 1px"
+                  >
+                    Back
+                  </button>
+                </form>
+              </div> -->
+            </div>
+          </div>
+          <div id="employeeSection" style="display: none; margin-top: 30px">
+            <div class="search">
+              <h3 style="margin-bottom: 7px; color: rgb(48, 73, 111)">
+                Employee List
+              </h3>
+              <div
+                style="
+                  display: flex;
+                  gap: 10px;
+                  align-items: center;
+                  width: 700px;
+                "
+              >
+                <input
+                  type="text"
+                  id="employeeSearch"
+                  placeholder="Type anything..."
+                  style="
+                    margin-bottom: 10px;
+                    padding: 8px;
+                    border-radius: 5px;
+                    border: 1px solid #ccc;
+                    width: 83%;
+                  "
+                />
+                <button onclick="exportToCSV()" class="btn-export">
+                  Export to CSV
+                </button>
+              </div>
+            </div>
+
+            <div class="table-scroll-wrapper">
+              <table
+                id="employeeTable"
+                border="1"
+                cellpadding="8"
+                cellspacing="0"
+              >
+                <thead>
+                  <tr>
+                    <th class="checkbox-col">
+                      <input type="checkbox" id="selectAll" />
+                    </th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Designation</th>
+                    <th>Department</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <button
+              id="bulkDeleteBtn"
+              onclick="bulkDeleteEmployees()"
+              class="btn-bulkdelete"
+              style="display: none"
+            >
+              Delete
+            </button>
+          </div>
+          <div id="manageSection" style="display: none; padding: 20px">
+            <h2 style="margin-bottom: 20px; color: rgb(48, 73, 111)">
+              Manage Employee
+            </h2>
+
+            <div
+              style="
+                margin-bottom: 16px;
+                display: flex;
+                gap: 10px;
+                align-items: center;
+              "
+            >
+              <input
+                type="text"
+                id="manageEmpId"
+                placeholder="Enter Employee ID (e.g. EMPQM012)"
+                style="
+                  padding: 8px;
+                  border-radius: 5px;
+                  border: 1px solid #ccc;
+                  width: 100%;
+                "
+              />
+              <button onclick="manageEmployeeById()" class="btn-manage">
+                Search
+              </button>
+            </div>
+
+            <div id="manageFormWrapper" style="display: none; margin-top: 20px">
+              <form id="manage_updateForm">
+                <input type="text" id="manage_emp_id" disabled />
+                <input
+                  type="text"
+                  id="manage_emp_name"
+                  placeholder="Name"
+                  required
+                />
+
+                <select id="manage_emp_designation" required>
+                  <option value="" disabled selected hidden>Designation</option>
+                  <option value="Manager">Manager</option>
+                  <option value="Developer">Developer</option>
+                  <option value="Tester">Tester</option>
+                  <option value="Intern">Intern</option>
+                  <option value="Consultant">Consultant</option>
+                  <option value="Team Lead">Team Lead</option>
+                  <option value="HR Executive">HR Executive</option>
+                  <option value="Sales Executive">Sales Executive</option>
+                </select>
+
+                <select id="manage_emp_department" required>
+                  <option value="" disabled selected hidden>Department</option>
+                  <option value="HR">HR</option>
+                  <option value="Sales">Sales</option>
+                  <option value="Engineering">Engineering</option>
+                  <option value="Marketing">Marketing</option>
+                  <option value="Finance">Finance</option>
+                </select>
+
+                <input
+                  type="email"
+                  id="manage_emp_email"
+                  placeholder="Email"
+                  required
+                />
+
+                <div style="display: flex; gap: 10px; margin-top: 10px">
+                  <button
+                    class="btn-update"
+                    type="button"
+                    onclick="UpdateEmployee()"
+                  >
+                    Update
+                  </button>
+                  <button
+                    class="btn-delete"
+                    type="button"
+                    onclick="DeleteEmployee()"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div id="analyticsSection" style="display: none">
+            <h2 style="margin-bottom: 20px">Workforce Insights</h2>
+
+            <div class="kpi-container">
+              <div class="kpi-card">
+                <h3>Total Employees</h3>
+                <p id="kpi-total">--</p>
+              </div>
+
+              <div class="kpi-card">
+                <h3>Departments</h3>
+                <p id="kpi-departments">--</p>
+              </div>
+
+              <div class="kpi-card">
+                <h3>Top Designation</h3>
+                <p id="kpi-designation">--</p>
+              </div>
+
+              <div class="kpi-card">
+                <h3>Top Department</h3>
+                <p id="kpi-top-department">--</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="toast" class="toast hidden"></div>
+      <script src="/static/js/auth.js"></script>
+      <script src="/static/js/employee.js"></script>
+    </div>
+
+    <!-- restrict access if jwt token missing -->
+    <script>
+      const token = localStorage.getItem("jwt_token");
+
+      if (!token || isTokenExpired(token)) {
+        const toast = document.createElement("div");
+        toast.id = "overlay-toast";
+        toast.textContent = "Unauthorized Access. Redirecting...";
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+          window.location.href = "/pages/Login.html";
+        }, 2000);
+      } else {
+        document.querySelector(".protected-content").style.display = "block";
+      }
+
+      // function showSection(section) {
+      //   const dashboard = document.getElementById("dashboardSection");
+      //   const analytics = document.getElementById("analyticsSection");
+      //   const employeelist = document.getElementById("employeeSection");
+
+      //   const buttons = document.querySelectorAll(".sidebar button");
+      //   buttons.forEach((btn) => btn.classList.remove("active"));
+
+      //   const clickedBtn = document.querySelector(
+      //     `.sidebar button[onclick="showSection('${section}')"]`
+      //   );
+      //   if (clickedBtn) clickedBtn.classList.add("active");
+
+      //   if (section === "dashboard") {
+      //     dashboard.style.display = "block";
+      //     analytics.style.display = "none";
+      //     employeelist.style.display = "none";
+      //     document.getElementById("employeeFormWrapper").style.display =
+      //       "block";
+      //     document.getElementById("viewByIdSection").style.display = "none";
+      //     document.getElementById("employeeDetails").style.display = "none";
+      //   } else if (section === "employeelist") {
+      //     dashboard.style.display = "none";
+      //     employeelist.style.display = "block";
+      //     analytics.style.display = "none";
+      //     toggleEmployeeList();
+      //   } else {
+      //     dashboard.style.display = "none";
+      //     analytics.style.display = "block";
+      //     employeelist.style.display = "none";
+      //     loadKPIAnalytics();
+      //   }
+      // }
+    </script>
+  </body>
+</html>

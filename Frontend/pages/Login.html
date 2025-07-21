@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <link rel="stylesheet" href="../static/css/style.css" />
+  </head>
+  <body>
+    <div class="login_page">
+      <h1>Login</h1>
+      <div class="container">
+        <div class="main">
+          <div class="content">
+            <h2>Login To Your Account</h2>
+            <form action="/login" method="post">
+              <label for="username">User Name</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="User Name"
+                required
+                autofocus
+              />
+
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="User Password"
+                required
+              />
+              <label style="font-size: 0.9rem; margin-top: -6px">
+                <input type="checkbox" onclick="togglePassword()" />
+                <span id="toggleText">Show Password</span>
+              </label>
+
+              <button class="btn" type="submit">Login</button>
+            </form>
+            <p class="account">
+              Don't Have An Account? <a href="../pages/SignUp.html">SignUp</a>
+            </p>
+          </div>
+          <div class="form-img">
+            <img src="../static/images/Login.jpg" alt="Background image" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="toast" class="toast hidden"></div>
+    <script src="../static/js/auth.js"></script>
+  </body>
+</html>
